@@ -1,0 +1,23 @@
+.screen {
+    display: flex;
+    grid-column: 1 / -1;
+    background-color: rgba(0,0,0,0.8);
+    align-items: flex-end;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 1rem;
+    word-wrap: break-word;
+    word-break: break-all;
+    border-radius: 5px 5px 0 0;
+}
+
+.screen .previous {
+    color: rgba(246,145,117,0.7);
+    font-size: .8rem;
+}
+
+.screen .current{
+    color: rgb(255,255,255);
+    font-weight: 100;
+    font-size: 2rem;
+}

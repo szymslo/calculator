@@ -1,0 +1,32 @@
+.equals {
+    grid-column: span 2;
+    border-radius: 0 0 5px 0;
+    background-color: rgb(230,47,137);
+    color: rgba(255,255,255,0.8)
+}
+
+.zero {
+    border-radius: 0 0 0 5px;
+    color: rgba(0,0,0,0.7);
+    background-color: rgb(235,235,235);
+}
+
+.operators {
+    background-color: rgb(140,81,221);
+    color: rgba(255,255,255,0.8)
+}
+
+.buttons-left {
+    color: rgba(0,0,0,0.7);
+    background-color: rgb(235,235,235);
+}
+
+.buttons-middle {
+    color: rgba(0,0,0,0.7);
+    background-color: rgb(245,245,245);
+}
+
+.buttons-right {
+    color: rgba(0,0,0,0.7);
+    background-color: rgb(255,255,255);
+}
