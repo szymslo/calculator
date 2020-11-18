@@ -1,10 +1,10 @@
 import './index.css'
 
-const Screen = () => {
+const Screen = ({previous, current, op}) => {
     return (
         <div className="screen">
-            <div className="previous">123 +</div>
-            <div className="current">456</div>
+            <div className="previous">{previous} {op}</div>
+            <div className="current">{current}</div>
         </div>
     )
 }

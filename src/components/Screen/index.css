@@ -13,11 +13,11 @@
 
 .screen .previous {
     color: rgba(246,145,117,0.7);
-    font-size: .8rem;
+    font-size: .9rem;
 }
 
 .screen .current{
     color: rgb(255,255,255);
     font-weight: 100;
-    font-size: 2rem;
+    font-size: 1.9rem;
 }
