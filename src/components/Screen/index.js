@@ -1,9 +1,9 @@
 import './index.css'
 
-const Screen = ({previous, current, op}) => {
+const Screen = ({previous, current}) => {
     return (
         <div className="screen">
-            <div className="previous">{previous} {op}</div>
+            <div className="previous">{previous}</div>
             <div className="current">{current}</div>
         </div>
     )

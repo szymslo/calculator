@@ -1,9 +1,11 @@
+/* eslint no-eval: 0 */
 import { useState } from 'react';
 import Button from '../components/Button';
 import Screen from '../components/Screen';
 import './Calculator.css'
 
 const calcButtons = ['%','+/-','C','/',7,8,9,'x',4,5,6,'-',1,2,3,'+',0,'.','='];
+const reg = new RegExp("[+-/*]", "g");
 
 const Calculator = () => {
 
@@ -14,10 +16,15 @@ const Calculator = () => {
 
     const appendNumber = number => {
       if(done) {
-        setCurrentOperand(number);
+        setCurrentOperand(number.toString());
         setDone(false);
       }
+      // no infinite .
       else if(number === '.' && currentOperand.includes('.')) {
+        return;
+      }
+      // no infinite zeros at beggining
+      else if(number === 0 && currentOperand === '0') {
         return;
       }
       else {
@@ -27,44 +34,69 @@ const Calculator = () => {
 
     const chooseOperation = operation => {
       if(currentOperand === '') return;
+
+      //adding multiple operation to top expression
       else if(previousOperand !== '') {
-        compute();
+        setOperation(operation);
+        setPreviousOperand(previousOperand + ' ' + currentOperand + ' ' + operation);
+        setCurrentOperand('');
       }
       else {
         setOperation(operation);
-        setPreviousOperand(currentOperand);
+        setPreviousOperand(currentOperand + ' ' + operation);
         setCurrentOperand('');
       }
     }
 
     const compute = () => {
-      let result;
-      const prev = parseFloat(previousOperand);
-      const current = parseFloat(currentOperand);
-      if(isNaN(prev) || isNaN(current)) return;
-      
-      switch(operation) {
-        case '+': 
-          result = prev + current;
-          break;
-        case '-': 
-          result = prev - current;
-          break;
-        case 'x': 
-          result = prev * current;
-          break;
-        case '/': 
-          result = prev / current;
-          break;
-        case '%': 
-          result = (prev / current) * 100;
-          break;
-        default: return;
+      let result, prev, current;
+
+      //evaluate top expression when there is no bottom operator
+      if(currentOperand === '' && previousOperand !== '') {
+        result = eval(previousOperand.slice(0, -1));
+        setCurrentOperand(result.toString());
+        setPreviousOperand('');
+        setOperation(undefined);
+        setDone(true);
       }
-      setCurrentOperand(result);
-      setPreviousOperand('');
-      setOperation(undefined);
-      setDone(true);
+
+      else {
+        //check if there is more than one (plus/minus/multiple/divide) operator
+        if((previousOperand.match(reg) || []).length > 1) {
+          //need to also evaluate top expression
+          prev = eval(previousOperand.slice(0, -1));
+        }
+        else {
+          prev = parseFloat(previousOperand);
+        }
+        
+        current = parseFloat(currentOperand);
+        if(isNaN(prev) || isNaN(current)) return;
+        
+        switch(operation) {
+          case '+': 
+            result = prev + current;
+            break;
+          case '-': 
+            result = prev - current;
+            break;
+          case '*': 
+            result = prev * current;
+            break;
+          case '/': 
+            result = prev / current;
+            break;
+          case '%': 
+            result = (prev / current) * 100;
+            break;
+          default: return;
+        }
+
+        setCurrentOperand(result);
+        setPreviousOperand('');
+        setOperation(undefined);
+        setDone(true);
+      }
     }
 
     const clear = () => {
@@ -90,7 +122,7 @@ const Calculator = () => {
 
     return (
       <div className="calculator">
-        <Screen previous={previousOperand} current={currentOperand} op={operation}/>
+        <Screen previous={previousOperand} current={currentOperand}/>
           {calcButtons.map(item => {
             return <Button update={click} key={item} symbol={item}/>
           })}

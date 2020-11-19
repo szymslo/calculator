@@ -8,7 +8,6 @@ const Button = ({symbol, update}) => {
         case 0:
             return <button onClick={() => update(symbol)} className="zero">{symbol}</button>;
         case '/':
-        case 'x':
         case '-':
         case '+':
             return <button onClick={() => update(symbol)} className="operators">{symbol}</button>;
@@ -28,6 +27,8 @@ const Button = ({symbol, update}) => {
         case 6:
         case 3:
             return <button onClick={() => update(symbol)} className="buttons-right">{symbol}</button>;
+        case 'x':
+            return <button onClick={() => update('*')} className="operators">{symbol}</button>;
         default: break;
     }
 
