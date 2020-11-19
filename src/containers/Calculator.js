@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Button from '../components/Button';
 import Screen from '../components/Screen';
-import './Calculator.css'
+import './Calculator.css';
 
 const calcButtons = ['%','+/-','C','/',7,8,9,'x',4,5,6,'-',1,2,3,'+',0,'.','='];
 const reg = new RegExp("[+-/*]", "g");
@@ -92,7 +92,7 @@ const Calculator = () => {
           default: return;
         }
 
-        setCurrentOperand(result);
+        setCurrentOperand(result.toString());
         setPreviousOperand('');
         setOperation(undefined);
         setDone(true);
@@ -105,6 +105,16 @@ const Calculator = () => {
       setOperation(undefined);
     }
 
+    const swap = () => {
+      if(currentOperand !== '' && currentOperand.includes('-')) {
+        setCurrentOperand(currentOperand.substring(1));
+      }
+      else if(currentOperand !== '') {
+        setCurrentOperand('-' + currentOperand);
+      }
+      else return;
+    }
+
     const click = symbol => {
       if(!isNaN(symbol) || symbol === '.') {
         appendNumber(symbol);
@@ -114,6 +124,9 @@ const Calculator = () => {
       }
       else if(symbol === 'C') {
         clear();
+      }
+      else if(symbol === '+/-') {
+        swap();
       }
       else {
         chooseOperation(symbol);
